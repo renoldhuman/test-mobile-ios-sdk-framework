@@ -28,8 +28,9 @@ let package = Package(
                 .product(name: "NordicDFU", package: "IOS-DFU-Library")
             ]
         ),
-        .binaryTarget(
-          name: "NXSDK",
-          path: "./Sources/NXSDK.xcframework")
+//        .binaryTarget(
+//          name: "NXSDK",
+//          path: "./Sources/NXSDK.xcframework")
+        .binaryTarget(name: "NXSDK", url: "https://github.com/renoldhuman/test-nextiles-ios-sdk-framework/raw/main/NXSDK.xcframework.zip", checksum: "46ae9c0996c9e79fa2eb57309801f253894f94a1f76dfc167d97b5889eb864fa")
     ]
 )

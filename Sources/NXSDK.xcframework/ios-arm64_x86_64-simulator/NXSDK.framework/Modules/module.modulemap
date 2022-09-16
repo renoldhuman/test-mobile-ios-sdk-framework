@@ -1,4 +1,0 @@
-framework module NXSDK {
-  header "NXSDK-Swift.h"
-  requires objc
-}
