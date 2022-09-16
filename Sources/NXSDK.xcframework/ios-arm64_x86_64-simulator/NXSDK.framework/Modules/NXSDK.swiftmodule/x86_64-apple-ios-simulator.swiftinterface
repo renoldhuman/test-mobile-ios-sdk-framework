@@ -1,0 +1,518 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios15.5-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name NXSDK
+import Accessibility
+import Combine
+import CoreBluetooth
+import Foundation
+import Network
+import NordicDFU
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+public struct Metadata {
+  public var firmwareVersions: [Swift.String]
+  public var productTypes: [Swift.String]
+  public var dataVersion: Swift.String
+  public var devices: [Swift.String]
+  public var device_placements: [Swift.String]?
+  public var platform: Swift.String
+  public var organization: Swift.String
+  public var username: Swift.String
+  public init(_ firmwareVersion: Swift.String, _ dataVersion: Swift.String, _ device: Swift.String, _ productType: Swift.String, _ platform: Swift.String, _ username: Swift.String, organization: Swift.String, _ device_placement: Swift.String?)
+  public mutating func addNewDeviceInformation(_ firmwareVersion: Swift.String, _ dataVersion: Swift.String, _ device: Swift.String, _ productType: Swift.String, _ platform: Swift.String, _ username: Swift.String, _ organization: Swift.String, _ device_placement: Swift.String?)
+}
+public let FIRMWARE_VERSION_0_0_0: Swift.String
+public let FIRMWARE_VERSION_0_0_1: Swift.String
+public let FIRMWARE_VERSION_1_0_0: Swift.String
+public let FIRMWARE_VERSION_2_0_0: Swift.String
+public let FIRMWARE_VERSION_2_0_1: Swift.String
+public let FIRMWARE_VERSION_2_0_2: Swift.String
+public let FIRMWARE_VERSION_2_1_0: Swift.String
+public struct NextilesDeviceType {
+  public static let SLEEVE: Swift.String
+  public static let KNEE: Swift.String
+  public static let SURFACE: Swift.String
+  public static let SOCK: Swift.String
+}
+public enum DeviceMeasurements : Swift.String {
+  case NEXTILES_BATTERY
+  case NEXTILES_ACCELERATION
+  case NEXTILES_GYRATION
+  case NEXTILES_MAGNET
+  case NEXTILES_FORCE
+  case NEXTILES_ENVIRONMENT
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum DevicePlacement : Swift.String {
+  case left_arm
+  case right_arm
+  case left_foot
+  case right_foot
+  case left_knee
+  case right_knee
+  case surface
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum DeviceType : Swift.String {
+  case sleeve
+  case knee
+  case sock
+  case surface
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum SessionMeasurements : Swift.String {
+  case force
+  case work
+  case power
+  case torque
+  case duration
+  case all
+  case reps
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct DeviceSettings {
+  public init(placement: NXSDK.DevicePlacement, device_type: NXSDK.DeviceType)
+}
+public struct Measurements {
+  public func getMagnet() -> NXSDK.Measurements.magnet
+  public func getBatteryCharge() -> Swift.String
+  public func getForce() -> NXSDK.Measurements.force
+  public func getAcceleration() -> NXSDK.Measurements.acceleration
+  public func getGyration() -> NXSDK.Measurements.gyration
+  public func getEnvironment() -> NXSDK.Measurements.environment
+  public struct acceleration {
+    public var x: Swift.String
+    public var y: Swift.String
+    public var z: Swift.String
+  }
+  public struct gyration {
+    public var x: Swift.String
+    public var y: Swift.String
+    public var z: Swift.String
+  }
+  public struct magnet {
+    public var x: Swift.String
+    public var y: Swift.String
+    public var z: Swift.String
+  }
+  public struct force {
+    public var values: [Swift.String]
+  }
+  public struct environment {
+    public var temperature: Swift.String
+    public var humidity: Swift.String
+    public var altitude: Swift.String
+  }
+}
+public let NEXTILES_LOGGING: Swift.String
+public let NEXTILES_FILE_ALREADY_EXISTS_ERROR: Swift.String
+@available(macOS 10.15, iOS 13.0, *)
+public class NextilesSDK : Combine.ObservableObject {
+  public init(organization: Swift.String, completion: @escaping (Swift.Bool) -> ())
+  public func loginUser(user: NXSDK.User, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  public func registerUser(user: NXSDK.User, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  public func editUser(user: NXSDK.User, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  public func logoutUser() -> Swift.Bool
+  public func getUser() -> NXSDK.User?
+  public func getUserSessions(user: NXSDK.User, completionHandler: @escaping (Swift.Bool, [Swift.String]) -> Swift.Void)
+  public func getSession(user: NXSDK.User, timeStamp: Swift.String, completionHandler: @escaping (Swift.Bool, NXSDK.Session?) -> Swift.Void)
+  public func getDiscoveredDevices() -> [NXSDK.Device]
+  public func getConnectedDevices() -> [NXSDK.Device]
+  public func getDevice(device: NXSDK.Device) -> NXSDK.Device?
+  public func getDevice(deviceName: Swift.String) -> NXSDK.Device?
+  public func getDevice(uuid: Foundation.UUID) -> NXSDK.Device?
+  public func getDevice(uuid: Swift.String) -> NXSDK.Device?
+  public func getBatteryCharge(device: NXSDK.Device) -> Swift.String?
+  public func getBatteryCharge(deviceName: Swift.String) -> Swift.String?
+  public func getBatteryCharge(uuid: Foundation.UUID) -> Swift.String?
+  public func getBatteryCharge(uuid: Swift.String) -> Swift.String?
+  public func getForce(device: NXSDK.Device) -> NXSDK.Measurements.force?
+  public func getForce(deviceName: Swift.String) -> NXSDK.Measurements.force?
+  public func getForce(uuid: Foundation.UUID) -> NXSDK.Measurements.force?
+  public func getForce(uuid: Swift.String) -> NXSDK.Measurements.force?
+  public func getAcceleration(device: NXSDK.Device) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(deviceName: Swift.String) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(uuid: Foundation.UUID) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(uuid: Swift.String) -> NXSDK.Measurements.acceleration?
+  public func getMagnet(device: NXSDK.Device) -> NXSDK.Measurements.magnet?
+  public func getMagnet(deviceName: Swift.String) -> NXSDK.Measurements.magnet?
+  public func getMagnet(uuid: Foundation.UUID) -> NXSDK.Measurements.magnet?
+  public func getMagnet(uuid: Swift.String) -> NXSDK.Measurements.magnet?
+  public func getGyration(device: NXSDK.Device) -> NXSDK.Measurements.gyration?
+  public func getGyration(deviceName: Swift.String) -> NXSDK.Measurements.gyration?
+  public func getGyration(uuid: Foundation.UUID) -> NXSDK.Measurements.gyration?
+  public func getGyration(uuid: Swift.String) -> NXSDK.Measurements.gyration?
+  public func getEnvironment(device: NXSDK.Device) -> NXSDK.Measurements.environment?
+  public func getEnvironment(deviceName: Swift.String) -> NXSDK.Measurements.environment?
+  public func getEnvironment(uuid: Foundation.UUID) -> NXSDK.Measurements.environment?
+  public func getEnvironment(uuid: Swift.String) -> NXSDK.Measurements.environment?
+  public func getDeviceListener(device: NXSDK.Device, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(deviceName: Swift.String, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(uuid: Foundation.UUID, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(uuid: Swift.String, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func connectDevice(device: NXSDK.Device, settings: NXSDK.DeviceSettings)
+  public func connectDevice(deviceName: Swift.String, settings: NXSDK.DeviceSettings)
+  public func connectDevice(uuid: Foundation.UUID, settings: NXSDK.DeviceSettings)
+  public func connectDevice(uuid: Swift.String, settings: NXSDK.DeviceSettings)
+  public func disconnectDevice(device: NXSDK.Device)
+  public func disconnectDevice(deviceName: Swift.String)
+  public func disconnectDevice(uuid: Foundation.UUID)
+  public func disconnectDevice(uuid: Swift.String)
+  public func startScan()
+  public func stopScan()
+  public func startSession() -> Swift.String?
+  public func startSession(sessionDuration: Swift.Int) -> Swift.String?
+  public func stopSession()
+  public func stopSession() -> Swift.String?
+  public func uploadSurvey(survey: NXSDK.SurveySession, sessionTimestamp: Swift.String)
+  public func updateDeviceFirmware(device: NXSDK.Device)
+  public func getRecentData(user: NXSDK.User, timeStamp: Swift.String?, completionHandler: @escaping (Swift.Bool, NXSDK.Session?) -> Swift.Void)
+  public func setDeviceCustomName(device: NXSDK.Device, name: Swift.String)
+  public func deleteDeviceCustomName(device: NXSDK.Device)
+  public func addDeviceToLocalStorage(device: NXSDK.Device)
+  public func removeDeviceFromLocalStorage(device: NXSDK.Device)
+  public func getDeviceFromLocalStorage(uuid: Swift.String) -> NXSDK.Device?
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @available(iOS 13.0, *)
+open class GenericDevice {
+  @objc deinit
+}
+@available(iOS 13.0, *)
+public class Devices : Foundation.ObservableObject {
+  @Combine.Published @_projectedValueProperty($discoveredDevices) public var discoveredDevices: [NXSDK.Device] {
+    get
+    @available(iOS 13.0, *)
+    set
+    @available(iOS 13.0, *)
+    _modify
+  }
+  public var $discoveredDevices: Combine.Published<[NXSDK.Device]>.Publisher {
+    get
+    @available(iOS 14.0, tvOS 14.0, watchOS 7.0, macOS 11.0, *)
+    set
+  }
+  public init(_ devices: [NXSDK.Device] = [])
+  public func setDeviceInfoChar(device: NXSDK.Device, characteristic: CoreBluetooth.CBCharacteristic)
+  public func setDeviceFirmware(device: NXSDK.Device, firmware: Swift.String)
+  public func setCustomName(device: NXSDK.Device, name: Swift.String)
+  public func deleteCustomName(device: NXSDK.Device)
+  public func setSettings(for aDevice: NXSDK.Device, with settings: NXSDK.DeviceSettings)
+  public func setSettings(deviceName: Swift.String, with settings: NXSDK.DeviceSettings)
+  public func setSettings(uuid: Foundation.UUID, with settings: NXSDK.DeviceSettings)
+  public func setSettings(uuid: Swift.String, with settings: NXSDK.DeviceSettings)
+  public func addDiscoveredDevice(_ device: NXSDK.Device)
+  public func removeDevice(device: NXSDK.Device)
+  public func removeDiscoveredDevice(_ device: NXSDK.Device)
+  public func connectDevice(_ device: NXSDK.Device)
+  public func subscribe(_ device: NXSDK.Device)
+  public func unsubscribe(_ device: NXSDK.Device)
+  public func disconnectDevice(_ device: NXSDK.Device)
+  public func addService(device: NXSDK.Device, service: CoreBluetooth.CBService)
+  public func appendBatteryCharacteristic(device: NXSDK.Device, characteristic: CoreBluetooth.CBCharacteristic)
+  public func appendCustomCharacteristic(device: NXSDK.Device, characteristic: CoreBluetooth.CBCharacteristic)
+  public func getDeviceInfoChar(device: NXSDK.Device) -> CoreBluetooth.CBCharacteristic?
+  public func getCharacteristics(device: NXSDK.Device) -> [CoreBluetooth.CBCharacteristic]?
+  public func getPeripheral(device: NXSDK.Device) -> CoreBluetooth.CBPeripheral?
+  public func getPeripheral(deviceName: Swift.String) -> CoreBluetooth.CBPeripheral?
+  public func getPeripheral(uuid: Foundation.UUID) -> CoreBluetooth.CBPeripheral?
+  public func getPeripheral(uuid: Swift.String) -> CoreBluetooth.CBPeripheral?
+  public func getDeviceListener(device: NXSDK.Device, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(deviceName: Swift.String, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(uuid: Foundation.UUID, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getDeviceListener(uuid: Swift.String, measurement: NXSDK.DeviceMeasurements) -> Combine.PassthroughSubject<[Swift.String], Swift.Never>?
+  public func getMagnet(device: NXSDK.Device) -> NXSDK.Measurements.magnet?
+  public func getMagnet(deviceName: Swift.String) -> NXSDK.Measurements.magnet?
+  public func getMagnet(uuid: Foundation.UUID) -> NXSDK.Measurements.magnet?
+  public func getMagnet(uuid: Swift.String) -> NXSDK.Measurements.magnet?
+  public func getGyration(device: NXSDK.Device) -> NXSDK.Measurements.gyration?
+  public func getGyration(deviceName: Swift.String) -> NXSDK.Measurements.gyration?
+  public func getGyration(uuid: Foundation.UUID) -> NXSDK.Measurements.gyration?
+  public func getGyration(uuid: Swift.String) -> NXSDK.Measurements.gyration?
+  public func getAcceleration(device: NXSDK.Device) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(deviceName: Swift.String) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(uuid: Foundation.UUID) -> NXSDK.Measurements.acceleration?
+  public func getAcceleration(uuid: Swift.String) -> NXSDK.Measurements.acceleration?
+  public func getForce(device: NXSDK.Device) -> NXSDK.Measurements.force?
+  public func getForce(deviceName: Swift.String) -> NXSDK.Measurements.force?
+  public func getForce(uuid: Foundation.UUID) -> NXSDK.Measurements.force?
+  public func getForce(uuid: Swift.String) -> NXSDK.Measurements.force?
+  public func getEnvironment(device: NXSDK.Device) -> NXSDK.Measurements.environment?
+  public func getEnvironment(deviceName: Swift.String) -> NXSDK.Measurements.environment?
+  public func getEnvironment(uuid: Foundation.UUID) -> NXSDK.Measurements.environment?
+  public func getEnvironment(uuid: Swift.String) -> NXSDK.Measurements.environment?
+  public func getBatteryCharge(device: NXSDK.Device) -> Swift.String?
+  public func getBatteryCharge(deviceName: Swift.String) -> Swift.String?
+  public func getBatteryCharge(uuid: Foundation.UUID) -> Swift.String?
+  public func getBatteryCharge(uuid: Swift.String) -> Swift.String?
+  public func getDevice(_ device: NXSDK.Device) -> NXSDK.Device?
+  public func getDevice(_ peripheral: CoreBluetooth.CBPeripheral) -> NXSDK.Device?
+  public func getDevice(deviceName: Swift.String) -> NXSDK.Device?
+  public func getDevice(uuid: Foundation.UUID) -> NXSDK.Device?
+  public func getDevice(uuid: Swift.String) -> NXSDK.Device?
+  public func getDiscoveredDevices() -> [NXSDK.Device]
+  public func getConnectedDevices() -> [NXSDK.Device]
+  public func getSubscribedDevices() -> [NXSDK.Device]
+  public func removeAllDevice()
+  public typealias ObjectWillChangePublisher = Combine.ObservableObjectPublisher
+  @objc deinit
+}
+@available(iOS 13.0, *)
+extension NXSDK.Devices {
+  public func isDevice(_ device: NXSDK.Device) -> Swift.Bool
+  public func contains(_ device: NXSDK.Device) -> Swift.Bool
+  public func getDeviceIndex(_ device: NXSDK.Device) -> Swift.Int?
+}
+@available(iOS 13.0, *)
+extension NXSDK.Devices : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+@available(iOS 13.0, *)
+public class Device {
+  public init(name: Swift.String, id: Foundation.UUID)
+  public init(peripheral: CoreBluetooth.CBPeripheral)
+  public init(name: Swift.String, id: Foundation.UUID, peripheral: CoreBluetooth.CBPeripheral?, customName: Swift.String?, placement: Swift.String?, deviceType: Swift.String?, fimrware: Swift.String?)
+  public var name: Swift.String {
+    get
+  }
+  public var id: Foundation.UUID {
+    get
+  }
+  public var uuidString: Swift.String {
+    get
+  }
+  public var userCustomName: Swift.String? {
+    get
+  }
+  public var placement: Swift.String? {
+    get
+  }
+  public var device_type: Swift.String? {
+    get
+  }
+  public var firmware_version: Swift.String? {
+    get
+  }
+  public var connected: Swift.Bool {
+    get
+  }
+  public var subscribed: Swift.Bool {
+    get
+  }
+  public func isConnected() -> Swift.Bool
+  public func isSubscribed() -> Swift.Bool
+  public func parseData(characteristic: CoreBluetooth.CBCharacteristic) -> (values: NXSDK.Measurements?, updatedMetrics: [NXSDK.DeviceMeasurements])
+  @objc deinit
+}
+@available(iOS 13.0, *)
+extension NXSDK.Device : Swift.Equatable {
+  public static func == (lhs: NXSDK.Device, rhs: NXSDK.Device) -> Swift.Bool
+}
+@available(iOS 13.0, *)
+extension NXSDK.Device : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+public struct Session {
+  public var timeStamp: Swift.String
+  public var duration: Swift.Int?
+  public var activity: Swift.String?
+  public var reps: NXSDK.reps?
+  public var session_summary: NXSDK.summary?
+  public var peaks: [NXSDK.peaks]?
+}
+public struct AnalyticsMetrics : Swift.Codable {
+  public let duration: Swift.Int?
+  public let summary: NXSDK.summary?
+  public let reps: NXSDK.reps?
+  public let activity: Swift.String?
+  public let peaks: [NXSDK.peaks]?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct peaks : Swift.Codable {
+  public let force: Swift.Float?
+  public let work: Swift.Float?
+  public let power: Swift.Float?
+  public let torque: Swift.Float?
+  public let raw_time: Swift.String?
+  public let time_elapsed: Swift.Float?
+  public let rep: Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct summary : Swift.Codable {
+  public let force: NXSDK.values?
+  public let power: NXSDK.values?
+  public let torque: NXSDK.values?
+  public let work: NXSDK.values?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct values : Swift.Codable {
+  public let scaled_min: Swift.Float?
+  public let scaled_mean: Swift.Float?
+  public let scaled_max: Swift.Float?
+  public let raw_min: Swift.Float?
+  public let raw_mean: Swift.Float?
+  public let raw_max: Swift.Float?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct reps : Swift.Codable {
+  public let micro: Swift.Int?
+  public let macro: Swift.Int?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public class User {
+  public var username: Swift.String
+  public var organization: Swift.String
+  public var name: Swift.String?
+  public var age: Swift.Int?
+  public var weight: Swift.Int?
+  public var height: Swift.Int?
+  public var dob: Swift.String?
+  public var gender: Swift.String?
+  public var country: Swift.String?
+  public var hand: Swift.String?
+  public var foot: Swift.String?
+  public var sport: [Swift.String : Swift.String]
+  public init(username: Swift.String, organization: Swift.String)
+  public func setName(name: Swift.String)
+  public func setAge(age: Swift.Int)
+  public func setWeight(weight: Swift.Int)
+  public func setHeight(height: Swift.Int)
+  public func setDob(dob: Swift.String)
+  public func setGender(gender: Swift.String)
+  public func setCountry(country: Swift.String)
+  public func setHand(hand: Swift.String)
+  public func setFoot(foot: Swift.String)
+  public func setSportAndSkillLevel(sport: Swift.String, skillLevel: Swift.String)
+  public func setAll(_ name: Swift.String?, _ age: Swift.Int?, _ weight: Swift.Int?, _ height: Swift.Int?, _ dob: Swift.String?, _ gender: Swift.String?, _ country: Swift.String?, _ hand: Swift.String?, _ foot: Swift.String?, _ sport: Swift.String?, _ skillLevel: Swift.String?)
+  @objc deinit
+}
+@available(iOS 13.0, *)
+public protocol bleProtocols {
+  func deviceGotConnected(device: NXSDK.Device)
+  func discoveredDevices(devices: [NXSDK.Device])
+  func deviceGotDisconnected(device: NXSDK.Device)
+  func firmwareDiscovered(device: NXSDK.Device)
+  func firmwareUpdate(device: NXSDK.Device, updateSuccessful: Swift.Bool?, statusMessage: Swift.String?)
+  func firmwarePercentageUpdate(device: NXSDK.Device, percentage: Swift.Int)
+}
+public protocol analyticsProtocol {
+  func getAnalyticsData(data: NXSDK.AnalyticsMetrics?)
+  func getSessionList(sessionList: [Swift.String])
+  func gotError(error: Swift.Error)
+}
+public protocol userAuthCallback {
+  func registeredSuccessfully(user: NXSDK.User)
+  func loginSuccessfully(user: NXSDK.User)
+}
+public protocol uploadDataAWSProtocols {
+  func uploadedDataToAWS(sessionTime: Swift.String)
+}
+@_hasMissingDesignatedInitializers public class NextilesDelegates {
+  @available(iOS 13.0, *)
+  public static var bleDelegate: NXSDK.bleProtocols?
+  public static var authDelegate: NXSDK.userAuthCallback?
+  public static var uploadDelegate: NXSDK.uploadDataAWSProtocols?
+  public static var analyticsDelegate: NXSDK.analyticsProtocol?
+  @objc deinit
+}
+public class SurveySession {
+  public enum activity : Swift.String {
+    case serve
+    case _throw
+    case squat
+    case punch
+    case kick
+    case bicep_curl
+    case pushup
+    case jumping_jack
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum goals : Swift.String {
+    case recover
+    case train
+    case warmup_cooldown
+    public init?(rawValue: Swift.String)
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public var activity: NXSDK.SurveySession.activity?
+  public var intensity: Swift.Int?
+  public var injury: Swift.Bool?
+  public var reps: Swift.Int?
+  public var goals: NXSDK.SurveySession.goals?
+  public init()
+  public func setActivity(activity: NXSDK.SurveySession.activity)
+  public func setIntensity(intensity: Swift.Int)
+  public func setInjury(injury: Swift.Bool)
+  public func setReps(reps: Swift.Int)
+  public func setGoals(goals: NXSDK.SurveySession.goals)
+  public func getSurveySessionDictionary() -> [Swift.String : Any]
+  @objc deinit
+}
+public enum metaDataQuestions : Swift.String, Swift.Codable {
+  case activity
+  case intensity
+  case injury
+  case reps
+  case goals
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension NXSDK.DeviceMeasurements : Swift.Equatable {}
+extension NXSDK.DeviceMeasurements : Swift.Hashable {}
+extension NXSDK.DeviceMeasurements : Swift.RawRepresentable {}
+extension NXSDK.DevicePlacement : Swift.Equatable {}
+extension NXSDK.DevicePlacement : Swift.Hashable {}
+extension NXSDK.DevicePlacement : Swift.RawRepresentable {}
+extension NXSDK.DeviceType : Swift.Equatable {}
+extension NXSDK.DeviceType : Swift.Hashable {}
+extension NXSDK.DeviceType : Swift.RawRepresentable {}
+extension NXSDK.SessionMeasurements : Swift.Equatable {}
+extension NXSDK.SessionMeasurements : Swift.Hashable {}
+extension NXSDK.SessionMeasurements : Swift.RawRepresentable {}
+extension NXSDK.SurveySession.activity : Swift.Equatable {}
+extension NXSDK.SurveySession.activity : Swift.Hashable {}
+extension NXSDK.SurveySession.activity : Swift.RawRepresentable {}
+extension NXSDK.SurveySession.goals : Swift.Equatable {}
+extension NXSDK.SurveySession.goals : Swift.Hashable {}
+extension NXSDK.SurveySession.goals : Swift.RawRepresentable {}
+extension NXSDK.metaDataQuestions : Swift.Equatable {}
+extension NXSDK.metaDataQuestions : Swift.Hashable {}
+extension NXSDK.metaDataQuestions : Swift.RawRepresentable {}
